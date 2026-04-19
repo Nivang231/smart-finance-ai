@@ -28,6 +28,7 @@ const Result = ({ data, setData }) => {
           ...prev,
           hindi: res.data.result
         }));
+        console.log("Hindi API response:", res.data);
 
       } catch (err) {
         console.log(err);

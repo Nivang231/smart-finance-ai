@@ -9,14 +9,17 @@ exports.getFinancialAdvice = async (req, res) => {
     // 🔥 CASE 1: Translation (Hindi button click)
     if (translate) {
       prompt = `
-Translate the following text into simple Hindi:
+Respond ONLY in Hindi.
 
+Convert the entire text into Hindi language.
+
+STRICT RULES:
+- Only Hindi
+- No English
+- Keep format same
+
+TEXT:
 ${text}
-
-IMPORTANT:
-- Keep same structure
-- Keep it short and clear
-- Do not add extra explanation
 `;
     }
 
@@ -74,19 +77,19 @@ Keep it short, numeric, and practical.
     });
 
   } catch (error) {
-  const errData = error.response?.data;
+    const errData = error.response?.data;
 
-  // 🔥 Gemini quota error detect
-  if (errData?.error?.code === 429) {
-    return res.status(429).json({
-      error: "LIMIT_EXCEEDED"
+    // 🔥 Gemini quota error detect
+    if (errData?.error?.code === 429) {
+      return res.status(429).json({
+        error: "LIMIT_EXCEEDED"
+      });
+    }
+
+    console.log("ERROR FULL:", errData || error.message);
+
+    res.status(500).json({
+      error: "Something went wrong"
     });
   }
-
-  console.log("ERROR FULL:", errData || error.message);
-
-  res.status(500).json({
-    error: "Something went wrong"
-  });
-}
 };

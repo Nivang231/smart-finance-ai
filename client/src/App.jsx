@@ -12,7 +12,7 @@ function App() {
     <div>
       <h1>Smart Finance AI 💸</h1>
       <Form setData={setData} />
-      <Result data={data} />
+      <Result data={data} setData={setData} />
     </div>
   );
 }
